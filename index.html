@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Viciel Beauty</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+</head>
+<style>
+    /* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f5f5f5;
+    line-height: 1.6;
+}
+header {
+    background-color: #f5f5f5;
+    color: black;
+}
+
+header .logo h1 {
+    display: inline;
+  
+}
+
+
+/* Navigation Links */
+.nav-links {
+    list-style: none;
+    display: flex; /* Align links horizontally */
+    gap: 60px; /* Space between the links */
+    position: absolute;
+    right: 110px; /* Shift nav bar to the right */
+    top: 40px; /* Move the nav bar down */
+    opacity: 1; /* Initially visible */
+    transition: opacity 0.3s ease; /* Transition effect */
+}
+
+.nav-links.hidden {
+    opacity: 0; /* Hide nav links when scrolling down */
+    pointer-events: none; /* Prevent interaction when hidden */
+}
+
+.nav-links li {
+    display: inline-block;
+}
+
+.nav-links a {
+    color: wheat; /* Color of the nav links */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem; /* Increase font size for better readability */
+}
+
+.nav-links a:hover {
+    color: #ff4081; /* Hover effect for the links */
+}
+
+/* Show toggle button when nav links are hidden */
+.show-toggle {
+    display: block; /* Show the toggle button when needed */
+}
+ /* Cart Icon */
+ .cart-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #e91e63;
+}
+
+.cart-icon .cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #ff4081;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 6px;
+    font-size: 12px;
+}
+
+/* Cart Modal Styles */
+.cart-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 350px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+/* Quantity Controls */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.quantity-btn {
+    background-color: #e91e63;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+
+.quantity-display {
+    font-size: 1.2rem;
+    width: 30px;
+    text-align: center;
+}
+
+/* Remove Button */
+.remove-btn {
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+/* Checkout and Clear Cart Buttons */
+.checkout-btn,
+.clear-cart-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+}
+
+.checkout-btn:hover {
+    background-color: #45a049;
+}
+
+.clear-cart-btn {
+    background-color: #ff4081;
+}
+
+.clear-cart-btn:hover {
+    background-color: #e91e63;
+}
+.hero {
+    text-align: center;
+    background-image: url('Gift.avif');
+    background-size: cover;
+    padding:200px 0px;
+    color: wheat;
+}
+
+.hero h2 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.hero .btn {
+    background-color: #ff4081;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+/* Initially hide the hero text */
+.hero h2, .hero p, .hero .btn {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 2s ease-out, transform 2s ease-out;
+}
+
+/* Add a class that will trigger the animation */
+.animate .hero h2, 
+.animate .hero p, 
+.animate .hero .btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero p {
+    transition-delay: 0.5s;
+}
+
+.hero .btn {
+    transition-delay: 1s;
+}
+
+.products {
+    padding: 50px;
+    background-color: white;
+}
+
+.products h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.product-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.product-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    width: 30%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.product-item img {
+    width: 100%;
+    max-width: 250px;
+}
+
+.product-item h3 {
+    margin: 15px 0;
+}
+
+.product-item p {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.product-item .btn {
+    background-color: #ff4081;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    margin-top: 20px;
+}
+
+/* Additional sections */
+.about, .services, .contact, .map {
+    padding: 50px;
+    text-align: center;
+    background-color: white;
+    margin-top: 20px;
+}
+
+.about h2, .services h2, .contact h2, .map h2 {
+    margin-bottom: 20px;
+}
+
+.services .service-list {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.services .service-item {
+    width: 30%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.contact form {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.contact form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.contact form input, .contact form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.contact form button {
+    padding: 10px 20px;
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.map iframe {
+    width: 100%;
+    height: 450px;
+    border: 0;
+}
+
+
+</style>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav>
+           
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#featured">Services</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+            <div class="cart-icon" onclick="toggleCartModal()">
+                🛒
+                <span class="cart-count">0</span>
+            </div>
+            
+        </nav>
+    </header>
+
+  <!-- Cart Modal -->
+  <div class="cart-modal" id="cartModal" style="display: none;">
+    <button class="close-btn" onclick="toggleCartModal()">✖</button>
+    <h2>Your Shopping Cart</h2>
+    <ul class="cart-items" id="cartItems"></ul>
+    <div class="cart-total" id="cartTotal">Total: R0.00</div>
+    <button class="checkout-btn" onclick="proceedToCheckout()">Proceed to Checkout</button>
+    <button class="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
+</div>
+
+   <!-- Hero Section -->
+   <section id="hero" class="hero">
+    <h2>Welcome to Viciel Beauty</h2>
+    <p>Your one-stop shop for all your skin and hair products.</p>
+    <a href="#featured" class="btn">Shop Now</a>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about Us">
+    <h2>About Us</h2>
+    <p>Viciel Beauty is dedicated to providing premium skin and hair products and services to make you look and feel your best.</p>
+</section>
+
+<!-- Featured Products -->
+<section id="featured" class="products">
+    <h2>Featured Products</h2>
+    <div class="product-list">
+        <div class="product-item">
+            <p>High-quality skincare products tailored to your needs.</p>
+            <img src="Skin.avif" alt="Product 1">
+            <h3>Face Serum & Day Cream</h3>
+            <p>R100.00</p>
+            <a href="skin.html" class="btn">Buy Now</a>
+        </div>
+        <div class="product-item">
+            <p> Whether you're looking to restore damaged hair or enhance your daily routine, we have you covered.</p>
+            <img src="Getty.avif" alt="Product 2">
+            <h3>Shampoo, Conditioner and Hair Growth Oil</h3>
+            <p>R300.00</p>
+            <a href="hair.html" class="btn">Buy Now</a>
+        </div>
+        <div class="product-item">
+            <p>Our in-house salon provides professional hair treatments tailored to your unique needs.</p>
+            <img src="Treat.avif" alt="Product 3">
+            <h3>Get your hair treated by Professionals</h3>
+            <p>R200.00</p>
+            <a href="#contact" class="btn">Book Now</a>
+        </div>
+    </div>
+</section>
+
+
+<!-- Contact Form Section -->
+<section id="contact" class="contact">
+    <h2>Contact Us</h2>
+    <form action="#" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+
+        <button type="submit">Send Message</button>
+    </form>
+</section>
+
+<!-- Google Map Section -->
+<section id="map" class="map">
+    <h2>Find Us</h2>
+
+    <!-- Embedded Google Map -->
+    <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.520370584646!2d18.643107!3d-33.902004399999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc511283bc0b7f%3A0x5efa6bd91d05fcb2!2sViciel%20Beauty!5e0!3m2!1sen!2sza!4v1727948850478!5m2!1sen!2sza" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+    <!-- Address and Contact Details -->
+    <div class="contact-details">
+        <h3>Our Address</h3>
+        <p>Shop 21C, Bellville Mall Cnr Bill Bezuidenhout Ave, Strand Rd,<br> Bellville,<br> Cape Town,<br> 7530</p>
+
+        <h3>Contact Details</h3>
+        <p>Phone: (123) 456-7890<br>Email: contact@vicielbeauty.com</p>
+
+        </div>
+<!-- Footer -->
+<footer>
+    <p>&copy; 2024 Viciel Beauty. All Rights Reserved.</p>
+</footer>
+
+
+
+</body>
+</html> 

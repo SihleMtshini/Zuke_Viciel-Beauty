@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skin Products - Viciel Beauty</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .products {
+            padding: 50px;
+            background-color: white;
+        }
+        
+        .products h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .product-list {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        
+        .product-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            width: 30%; /* Adjust width as necessary */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .product-item img {
+            width: 100%;
+            max-width: 250px;
+        }
+        
+        .product-item h3 {
+            margin: 15px 0;
+        }
+        
+        .product-item p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .product-item .btn {
+            background-color: #e91e63;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-left: 565px;
+            margin-bottom: 20px; /* Space below the button */
+            padding: 10px 15px;
+            background-color: #e91e63; /* Button color */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer; /* Change cursor on hover */
+        }
+        
+        .back-btn:hover {
+            background-color: #d81b60; /* Darker shade on hover */
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            margin-top: 20px;
+        }
+
+        /* Cart Icon */
+        .cart-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #e91e63;
+        }
+
+        .cart-icon .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #ff4081;
+            color: white;
+            border-radius: 50%;
+            padding: 3px 6px;
+            font-size: 12px;
+        }
+
+        /* Cart Modal Styles */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 350px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        /* Quantity Controls */
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .quantity-btn {
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 0 5px;
+        }
+
+        .quantity-display {
+            font-size: 1.2rem;
+            width: 30px;
+            text-align: center;
+        }
+
+        /* Remove Button */
+        .remove-btn {
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        /* Checkout and Clear Cart Buttons */
+        .checkout-btn,
+        .clear-cart-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: block;
+            width: 100%;
+        }
+
+        .checkout-btn:hover {
+            background-color: #45a049;
+        }
+
+        .clear-cart-btn {
+            background-color: #ff4081;
+        }
+
+        .clear-cart-btn:hover {
+            background-color: #e91e63;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Cart Icon -->
+        <div class="cart-icon" onclick="toggleCartModal()">
+            <span class="cart-count">0</span> 🛒
+        </div>
+    </header>
+
+    <section class="products">
+        <h2>Skin Products</h2>
+        <div class="product-list">
+            <div class="product-item">
+                <img src="seri.avif" alt="Face Serum">
+                <h3>Face Serum</h3>
+                <p>R100.00</p>
+                <button class="btn" onclick="addToCart('Face Serum', 100)">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="day.avif" alt="Day Cream">
+                <h3>Day Cream</h3>
+                <p>R150.00</p>
+                <button class="btn" onclick="addToCart('Day Cream', 150)">Add to Cart</button>
+            </div>
+            <!-- Add more skin products as needed -->
+        </div>
+    </section>
+    
+    <a href="index.html" class="btn back-btn">Back to Home</a>
+    
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <button class="close-btn" onclick="toggleCartModal()">✖</button>
+        <h2>Your Shopping Cart</h2>
+        <ul class="cart-items" id="cartItems"></ul>
+        <div class="cart-total" id="cartTotal">Total: R0.00</div>
+        <button class="checkout-btn" onclick="proceedToCheckout()">Proceed to Checkout</button>
+        <button class="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Viciel Beauty. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Initialize cart from localStorage or set it to an empty array
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        updateCartCount(); // Update cart count on page load
+
+        function addToCart(product, price) {
+            const existingItem = cart.find(item => item.name === product);
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ name: product, price: price, quantity: 1 });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart)); // Update localStorage
+            updateCartCount(); // Update cart count in the icon
+            showCartSummary(); // Update the modal to show the new item
+        }
+
+        function updateCartCount() {
+            const cartCount = document.querySelector('.cart-count');
+            cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+        }
+
+        function toggleCartModal() {
+            const cartModal = document.getElementById('cartModal');
+            cartModal.style.display = cartModal.style.display === 'block' ? 'none' : 'block';
+            showCartSummary(); // Show the cart summary when modal is opened
+        }
+
+        function proceedToCheckout() {
+            if (cart.length === 0) {
+                alert("Your cart is empty! Please add items before proceeding to checkout.");
+                return;
+            }
+            alert("Proceeding to checkout...");
+            // Implement checkout logic here (e.g., redirect to checkout page)
+        }
+
+        function clearCart() {
+            cart = []; // Empty the cart array
+            localStorage.setItem('cart', JSON.stringify(cart)); // Update localStorage
+            updateCartCount(); // Update cart count in the icon
+            showCartSummary(); // Update the modal to show the cleared cart
+            alert("Your cart has been cleared.");
+        }
+
+        function showCartSummary() {
+            const cartItemsElement = document.getElementById('cartItems');
+            const cartTotalElement = document.getElementById('cartTotal');
+
+            // Clear the current cart items
+            cartItemsElement.innerHTML = '';
+
+            let total = 0;
+
+            // Loop through cart items and display them
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                const cartItem = document.createElement('li');
+                cartItem.innerHTML = `
+                    <span><strong>${item.name}</strong> - R${item.price}</span>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                        <input type="text" class="quantity-display" value="${item.quantity}" readonly />
+                        <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                        <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+                    </div>
+                `;
+                cartItemsElement.appendChild(cartItem);
+            });
+
+            cartTotalElement.textContent = `Total: R${total.toFixed(2)}`; // Update total amount
+        }
+
+        function updateQuantity(index, change) {
+            const item = cart[index];
+            item.quantity += change;
+
+            // Remove item if quantity is less than or equal to 0
+            if (item.quantity <= 0) {
+                cart.splice(index, 1);
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart)); // Update localStorage
+            updateCartCount(); // Update cart count in the icon
+            showCartSummary(); // Update the modal to show the current cart
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1); // Remove the item from cart
+            localStorage.setItem('cart', JSON.stringify(cart)); // Update localStorage
+            updateCartCount(); // Update cart count in the icon
+            showCartSummary(); // Update the modal to show the current cart
+        }
+    </script>
+</body>
+</html>
